@@ -4,9 +4,10 @@
 //Date: 05/01/2021
 
 #include <iostream>
-#include<string>
-#include<vector>
-#include<iomanip>
+#include <string>
+#include <vector>
+#include <iomanip>
+#include "Input_Validation_Extended.h"
 using namespace std; 
 
 class MenuItem
@@ -83,13 +84,12 @@ void populateMenu(vector<MenuItem> &entireMenu)
     entireMenu[i].setDesc("delicious"); //set all default desc to "delicous"
   }
 
-
 }
 
 void showMenu(vector<MenuItem> &m)
 {
   cout << fixed << setprecision(2);//set doubles to 2 decimal places
-  cout << "DrT's Effcient Menu" << endl; 
+  cout << "Angora's Struct to Class Menu" << endl; 
   cout << "ADD  \tNAME \t COST \tREMOVE\tCOUNT\tDESC"<<endl; 
   for(int i = 0; i < m.size(); i++)
   {
@@ -104,7 +104,10 @@ void showMenu(vector<MenuItem> &m)
 void acceptOrder(vector<MenuItem> &m)
 {
   char option = '\0';// the user-selected menu item
-  double subtotal = 0.0; 
+  double subtotal = 0.0;
+  double total = 0.0;
+  double tip = 0.0; 
+  int userInput = 0;
 
   do
   {
@@ -156,8 +159,47 @@ void acceptOrder(vector<MenuItem> &m)
     }
   }while(option != 'x' && option != 'X'); 
   cout << "\nThank you for placing your order." << endl; 
-  //handle the tip process here
-  //handle reciept generation here
+  
+  //Tip Process
+  cout << "\nSubtotal = $" << subtotal;
+  cout << "\n20%      = $" << subtotal * .2;
+  cout << "\nEnter tip amount: ";
+  tip = validateDouble(tip);
+  
+  //Total Due Process
+  cout << "\nSubtotal  = $" << subtotal;
+  cout << "\nTax       = $" << subtotal * .0625;
+  cout << "\nTip       = $" << tip;
+  total = subtotal + subtotal * .0625 + tip;
+  cout << "\nTotal Due = $" << total;
+  
+  //Cash or card
+  cout << "\n1) Cash ";
+  cout << "\n2) Card ";
+  userInput = validateInt(userInput);
+  if(userInput == 1)
+  {
+    double cash = 0.0;
+    cout << "\nHand over cash $";
+    cash = validateDouble(cash);
+    cout << "\nChange = $" << cash - total;
+  }
+  else if(userInput == 2)
+  {
+    cout << "\nThank you! Your payment has been processed!";
+  }
+}
+
+void printReceipt(vector<MenuItem> &m, double subtotal)
+{
+  for(int i=0; i < m.size(); i++)
+  {
+    if(m[i].getCount() > 0)
+    {
+      cout << "hi";
+    }
+  }
+  
 }
 
 int main() 
@@ -166,6 +208,7 @@ int main()
   populateMenu(wholeMenu); //put some default values in the menu
   showMenu(wholeMenu); //print the current data of the menu on screen 
   acceptOrder(wholeMenu); 
-  
+  printReceipt(wholeMenu);
+
   return 0; 
 }
