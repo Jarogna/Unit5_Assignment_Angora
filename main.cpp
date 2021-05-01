@@ -1,5 +1,5 @@
 //Convert Dr. T's struct to class and add Dr. T's To Do list.
-//Teacher: Dr. Tyson McMillian
+//Teacher: Dr. Tyson McMillan
 //Student: Ronald Angora
 //Date: 05/01/2021
 
@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+#include <numeric>
 #include "Input_Validation_Extended.h"
 using namespace std; 
 
@@ -104,7 +105,7 @@ void showMenu(vector<MenuItem> &m)
 void acceptOrder(vector<MenuItem> &m)
 {
   char option = '\0';// the user-selected menu item
-  double subtotal = 0.0;
+  double subTotal = 0.0;
   double total = 0.0;
   double tip = 0.0; 
   int userInput = 0;
@@ -122,9 +123,9 @@ void acceptOrder(vector<MenuItem> &m)
         m[i].increaseCount(); //increment the count by 1
         cout << "\033[2J\033[1;1H"; //clear screen 
         cout << "\n1 UP on " << m[i].getName() << endl;
-        subtotal += m[i].getItemCost(); //increment the subtotal by the cost of the item 
+        subTotal += m[i].getItemCost(); //increment the subtotal by the cost of the item 
         showMenu(m); //show the updated menu
-        cout << "\nSubtotal: $" << subtotal << endl;  
+        cout << "\nSubtotal: $" << subTotal << endl;  
       }
       else if(option == m[i].getRemoveLetter())
       {
@@ -134,9 +135,9 @@ void acceptOrder(vector<MenuItem> &m)
           m[i].decreaseCount(); //decrement the count by 1
           cout << "\033[2J\033[1;1H"; //clear screen 
           cout << "\n1 DOWN on " << m[i].getName() << endl;
-          subtotal -= m[i].getItemCost(); //decrement the subtotal by the cost of the item
+          subTotal -= m[i].getItemCost(); //decrement the subtotal by the cost of the item
           showMenu(m); //show the updated menu
-          cout << "\nSubtotal: $" << subtotal << endl;  
+          cout << "\nSubtotal: $" << subTotal << endl;  
         }
         else //the the user why you blocked item removal 
         {
@@ -158,19 +159,19 @@ void acceptOrder(vector<MenuItem> &m)
             }
     }
   }while(option != 'x' && option != 'X'); 
-  cout << "\nThank you for placing your order." << endl; 
+  cout << "\nThank you for placing your order."; 
   
   //Tip Process
-  cout << "\nSubtotal = $" << subtotal;
-  cout << "\n20%      = $" << subtotal * .2;
+  cout << "\nSubtotal = $" << subTotal;
+  cout << "\n20%      = $" << subTotal * .2;
   cout << "\nEnter tip amount: ";
   tip = validateDouble(tip);
   
   //Total Due Process
-  cout << "\nSubtotal  = $" << subtotal;
-  cout << "\nTax       = $" << subtotal * .0625;
+  cout << "\nSubtotal  = $" << subTotal;
+  cout << "\nTax       = $" << subTotal * .0625;
   cout << "\nTip       = $" << tip;
-  total = subtotal + subtotal * .0625 + tip;
+  total = subTotal + subTotal * .0625 + tip;
   cout << "\nTotal Due = $" << total;
   
   //Cash or card
@@ -190,16 +191,19 @@ void acceptOrder(vector<MenuItem> &m)
   }
 }
 
-void printReceipt(vector<MenuItem> &m, double subtotal)
+void printReceipt(vector<MenuItem> &m, double subTotal)
 {
+  cout << fixed << setprecision(2);
+  cout << "\n************RECEIPT************" << endl;
+  cout << "NAME \t\tCOST \tCOUNT"<<endl;
   for(int i=0; i < m.size(); i++)
   {
     if(m[i].getCount() > 0)
     {
-      cout << "hi";
+      cout << m[i].getName() << setw(4) << "$" << m[i].getItemCost() << setw(5)
+      << m[i].getCount() << setw(9) << endl; 
     }
-  }
-  
+  }  
 }
 
 int main() 
@@ -208,7 +212,7 @@ int main()
   populateMenu(wholeMenu); //put some default values in the menu
   showMenu(wholeMenu); //print the current data of the menu on screen 
   acceptOrder(wholeMenu); 
-  printReceipt(wholeMenu);
+  printReceipt(wholeMenu, subTotal);
 
   return 0; 
 }
