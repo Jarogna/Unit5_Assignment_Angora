@@ -89,13 +89,16 @@ void populateMenu(vector<MenuItem> &entireMenu)
 
 void showMenu(vector<MenuItem> &m)
 {
+  string colorB;
+  colorB = "\x1b[" + to_string(34) + ";1m";
+  string reset = "\x1b[0m";
   cout << fixed << setprecision(2);//set doubles to 2 decimal places
-  cout << "Angora's Struct to Class Menu" << endl; 
-  cout << "ADD  \tNAME \t COST \tREMOVE\tCOUNT\tDESC"<<endl; 
+  cout << colorB << "Angora's Struct to Class Menu" << reset << endl; 
+  cout << "\x1b[36;1mADD\x1b[0m  \t\x1b[39;1mNAME\x1b[0m \t \x1b[32;1mCOST\x1b[0m \t\x1b[31;1mREMOVE\x1b[0m\t\x1b[39;1mCOUNT\x1b[0m\t\x1b[93;1mDESC\x1b[0m"<<endl; 
   for(int i = 0; i < m.size(); i++)
   {
     cout << m[i].getAddLetter() << ")" << setw(10) << m[i].getName()
-    << setw(5) << "$" << m[i].getItemCost() << setw(5) << "(" << m[i].getRemoveLetter()
+    << setw(5) << "\x1b[32;1m\t$\x1b[0m" << m[i].getItemCost() << setw(5) << "(" << m[i].getRemoveLetter()
     << ")" << setw(7) << m[i].getCount() << setw(13) << m[i].getDesc() 
     <<endl; 
   }
@@ -195,12 +198,12 @@ void printReceipt(vector<MenuItem> &m)
 {
   cout << fixed << setprecision(2);
   cout << "\n\n************RECEIPT************" << endl;
-  cout << "NAME \t\tCOST \tCOUNT"<<endl;
+  cout << "\x1b[39;1mNAME\x1b[0m \t\t\x1b[32;1mCOST\x1b[0m \t\x1b[39;1mCOUNT\x1b[0m"<<endl;
   for(int i=0; i < m.size(); i++)
   {
     if(m[i].getCount() > 0)
     {
-      cout << m[i].getName() << setw(4) << "$" << m[i].getItemCost() << setw(5)
+      cout << m[i].getName() << setw(4) << "\x1b[32;1m\t$\x1b[0m" << m[i].getItemCost() << setw(5)
       << m[i].getCount() << setw(9) << endl; 
     }
   }  
