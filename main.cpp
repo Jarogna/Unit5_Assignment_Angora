@@ -187,14 +187,14 @@ void acceptOrder(vector<MenuItem> &m)
   }
   else if(userInput == 2)
   {
-    cout << "\nThank you! Your payment has been processed!";
+    cout << "Thank you! Your payment has been processed!";
   }
 }
 
-void printReceipt(vector<MenuItem> &m, double subTotal)
+void printReceipt(vector<MenuItem> &m)
 {
   cout << fixed << setprecision(2);
-  cout << "\n************RECEIPT************" << endl;
+  cout << "\n\n************RECEIPT************" << endl;
   cout << "NAME \t\tCOST \tCOUNT"<<endl;
   for(int i=0; i < m.size(); i++)
   {
@@ -208,11 +208,18 @@ void printReceipt(vector<MenuItem> &m, double subTotal)
 
 int main() 
 {
-  vector<MenuItem> wholeMenu; 
-  populateMenu(wholeMenu); //put some default values in the menu
-  showMenu(wholeMenu); //print the current data of the menu on screen 
-  acceptOrder(wholeMenu); 
-  printReceipt(wholeMenu, subTotal);
-
+  char option = '\0';
+  do
+  {
+    vector<MenuItem> wholeMenu; 
+    populateMenu(wholeMenu); //put some default values in the menu
+    showMenu(wholeMenu); //print the current data of the menu on screen 
+    acceptOrder(wholeMenu); 
+    printReceipt(wholeMenu);
+    cout << "\nAny key for a new customer." << endl;
+    cout << "'X' or 'x' to Quit." << endl;
+    cin >> option;
+  }while(option != 'X' && option != 'x');
+  
   return 0; 
 }
