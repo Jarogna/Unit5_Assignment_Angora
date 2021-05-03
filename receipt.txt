@@ -1,0 +1,15 @@
+
+
+************RECEIPT************
+NAME 		COST 	COUNT
+Green Tea   $3.00    1
+  Burrito   $4.00    2
+     Taco   $5.00    2
+   Salmon   $6.00    2
+    Steak   $7.00    1
+
+Subtotal  = $40.00
+Tax       = $2.50
+Tip       = $8.00
+Total Due = $50.50
+PAID! Thank you for your business!

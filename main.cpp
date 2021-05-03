@@ -111,6 +111,7 @@ void acceptOrder(vector<MenuItem> &m)
   double total = 0.0;
   double tip = 0.0; 
   int userInput = 0;
+  ofstream myfile;
 
   do
   {
@@ -191,6 +192,8 @@ void acceptOrder(vector<MenuItem> &m)
   {
     cout << "Thank you! Your payment has been processed!";
   }
+  
+  //Generate a Receipt for the order.
   void printReceipt(vector<MenuItem> &m, double subtotal);
   {
     cout << fixed << setprecision(2);
@@ -211,21 +214,30 @@ void acceptOrder(vector<MenuItem> &m)
     cout << "\nTotal Due = \x1b[32;1m$\x1b[0m" << total;
     cout << "\nPAID! Thank you for your business!" << endl;
   }
-}
 
-void printReceipt(vector<MenuItem> &m)
-{
-  cout << fixed << setprecision(2);
-  cout << "\n\n************RECEIPT************" << endl;
-  cout << "\x1b[39;1mNAME\x1b[0m \t\t\x1b[32;1mCOST\x1b[0m \t\x1b[39;1mCOUNT\x1b[0m"<<endl;
-  for(int i=0; i < m.size(); i++)
+  //Generate a Receipt to txt file
+  void printReceiptTxt(vector<MenuItem> &m, double subtotal);
   {
-    if(m[i].getCount() > 0)
+    myfile.open ("receipt.txt");
+    myfile << fixed << setprecision(2);
+    myfile << "\n\n************RECEIPT************" << endl;
+    myfile << "NAME \t\tCOST \tCOUNT"<<endl;
+    for(int i=0; i < m.size(); i++)
     {
-      cout << m[i].getName() << setw(4) << "\x1b[32;1m\t$\x1b[0m" << m[i].getItemCost() << setw(5)
-      << m[i].getCount() << setw(9) << endl; 
-    }
-  }  
+      if(m[i].getCount() > 0)
+      {
+        myfile << m[i].getName() << setw(4) << "$" << m[i].getItemCost() << setw(5)
+        << m[i].getCount() << setw(9) << endl;
+      }
+    } 
+    myfile << "\nSubtotal  = $" << subTotal;
+    myfile << "\nTax       = $" << subTotal * .0625;
+    myfile << "\nTip       = $" << tip;
+    total = subTotal + subTotal * .0625 + tip;
+    myfile << "\nTotal Due = $" << total;
+    myfile << "\nPAID! Thank you for your business!" << endl;
+    myfile.close();
+  } 
 }
 
 int main() 
@@ -238,12 +250,10 @@ int main()
     populateMenu(wholeMenu); //put some default values in the menu
     showMenu(wholeMenu); //print the current data of the menu on screen 
     acceptOrder(wholeMenu); 
-    //printReceipt(wholeMenu);
     cout << "\nAny key for a new customer." << endl;
     cout << "'X' or 'x' to Quit." << endl;
     cin >> option;
   }while(option != 'X' && option != 'x');
-
 
   return 0; 
 }
