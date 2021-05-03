@@ -4,6 +4,7 @@
 //Date: 05/01/2021
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <iomanip>
@@ -23,14 +24,12 @@ class MenuItem
   public:
     //Default Constructor
     MenuItem() = default;
-    //Setters
     void setName(string n){ name = n; }
     void setItemCost(double IC){ itemCost = IC; }
     void setDesc(string d){ desc = d; }
     void setAddLetter(char AL){ addLetter = AL; }
     void setRemoveLetter(char RL){ removeLetter = RL; }
     void setCount(int c){ count = c; }
-    //Getters
     string getName() const { return name; }
     double getItemCost() const { return itemCost; }
     string getDesc() const { return desc; }
@@ -165,17 +164,17 @@ void acceptOrder(vector<MenuItem> &m)
   cout << "\nThank you for placing your order."; 
   
   //Tip Process
-  cout << "\nSubtotal = $" << subTotal;
-  cout << "\n20%      = $" << subTotal * .2;
+  cout << "\nSubtotal = \x1b[32;1m$\x1b[0m" << subTotal;
+  cout << "\n20%      = \x1b[32;1m$\x1b[0m" << subTotal * .2;
   cout << "\nEnter tip amount: ";
   tip = validateDouble(tip);
   
   //Total Due Process
-  cout << "\nSubtotal  = $" << subTotal;
-  cout << "\nTax       = $" << subTotal * .0625;
-  cout << "\nTip       = $" << tip;
+  cout << "\nSubtotal  = \x1b[32;1m$\x1b[0m" << subTotal;
+  cout << "\nTax       = \x1b[32;1m$\x1b[0m" << subTotal * .0625;
+  cout << "\nTip       = \x1b[32;1m$\x1b[0m" << tip;
   total = subTotal + subTotal * .0625 + tip;
-  cout << "\nTotal Due = $" << total;
+  cout << "\nTotal Due = \x1b[32;1m$\x1b[0m" << total;
   
   //Cash or card
   cout << "\n1) Cash ";
@@ -184,13 +183,33 @@ void acceptOrder(vector<MenuItem> &m)
   if(userInput == 1)
   {
     double cash = 0.0;
-    cout << "\nHand over cash $";
+    cout << "\nHand over cash \x1b[32;1m$\x1b[0m";
     cash = validateDouble(cash);
-    cout << "\nChange = $" << cash - total;
+    cout << "\nChange = \x1b[32;1m$\x1b[0m" << cash - total;
   }
   else if(userInput == 2)
   {
     cout << "Thank you! Your payment has been processed!";
+  }
+  void printReceipt(vector<MenuItem> &m, double subtotal);
+  {
+    cout << fixed << setprecision(2);
+    cout << "\n\n************RECEIPT************" << endl;
+    cout << "\x1b[39;1mNAME\x1b[0m \t\t\x1b[32;1mCOST\x1b[0m \t\x1b[39;1mCOUNT\x1b[0m"<<endl;
+    for(int i=0; i < m.size(); i++)
+    {
+      if(m[i].getCount() > 0)
+      {
+        cout << m[i].getName() << setw(4) << "\x1b[32;1m\t$\x1b[0m" << m[i].getItemCost() << setw(5)
+        << m[i].getCount() << setw(9) << endl;
+      }
+    } 
+    cout << "\nSubtotal  = \x1b[32;1m$\x1b[0m" << subTotal;
+    cout << "\nTax       = \x1b[32;1m$\x1b[0m" << subTotal * .0625;
+    cout << "\nTip       = \x1b[32;1m$\x1b[0m" << tip;
+    total = subTotal + subTotal * .0625 + tip;
+    cout << "\nTotal Due = \x1b[32;1m$\x1b[0m" << total;
+    cout << "\nPAID! Thank you for your business!" << endl;
   }
 }
 
@@ -211,6 +230,7 @@ void printReceipt(vector<MenuItem> &m)
 
 int main() 
 {
+  ofstream myfile;
   char option = '\0';
   do
   {
@@ -218,11 +238,12 @@ int main()
     populateMenu(wholeMenu); //put some default values in the menu
     showMenu(wholeMenu); //print the current data of the menu on screen 
     acceptOrder(wholeMenu); 
-    printReceipt(wholeMenu);
+    //printReceipt(wholeMenu);
     cout << "\nAny key for a new customer." << endl;
     cout << "'X' or 'x' to Quit." << endl;
     cin >> option;
   }while(option != 'X' && option != 'x');
-  
+
+
   return 0; 
 }
