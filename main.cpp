@@ -221,7 +221,7 @@ void acceptOrder(vector<MenuItem> &m)
     myfile.open ("receipt.txt");
     myfile << fixed << setprecision(2);
     myfile << "\n\n************RECEIPT************" << endl;
-    myfile << "NAME \t\tCOST \tCOUNT"<<endl;
+    myfile << "NAME \t\t\t\tCOST \tCOUNT"<<endl;
     for(int i=0; i < m.size(); i++)
     {
       if(m[i].getCount() > 0)

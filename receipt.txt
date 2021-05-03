@@ -1,15 +1,17 @@
 
 
 ************RECEIPT************
-NAME 		COST 	COUNT
-Green Tea   $3.00    1
-  Burrito   $4.00    2
-     Taco   $5.00    2
-   Salmon   $6.00    2
+NAME 				COST 	COUNT
+Green Tea   $3.00    2
+  Burrito   $4.00    1
+     Taco   $5.00    1
+   Salmon   $6.00    1
     Steak   $7.00    1
+    Kabob   $8.00    2
+   Burger   $9.00    2
 
-Subtotal  = $40.00
-Tax       = $2.50
-Tip       = $8.00
-Total Due = $50.50
+Subtotal  = $62.00
+Tax       = $3.88
+Tip       = $12.40
+Total Due = $78.28
 PAID! Thank you for your business!
